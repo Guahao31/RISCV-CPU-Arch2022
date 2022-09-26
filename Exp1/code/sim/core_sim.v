@@ -2,6 +2,7 @@
 
 module core_sim;
     reg clk, rst;
+    reg [7:0] counter;
 
     RV32core core(
         .debug_en(1'b0),
@@ -15,11 +16,19 @@ module core_sim;
 
     initial begin
         $dumpfile("test.vcd");
-        $dumpvars(0, core_sim);
+        $dumpvars(1, core_sim);
+        $dumpvars(1, core);
         clk = 0;
         rst = 1;
+        counter = 8'b0;
         #2 rst = 0;
     end
-    always #1 clk = ~clk;
+    always begin
+        counter = counter + 8'b1;
+        #1 clk = ~clk;
+        if(!counter) begin
+            $finish;
+        end
+    end
 
 endmodule
