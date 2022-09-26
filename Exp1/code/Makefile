@@ -11,13 +11,14 @@ ElfFile  = run
 
 # read Verilog Files' catalog
 FileBuf := $(shell cat $(ObjVFile))
+Include = -I ./auxillary
 
 # make all
 all: compile visual
 
 # only make compile
 compile:
-	iverilog -o run.out $(FileBuf)
+	iverilog $(Include) -o run.out $(FileBuf)
 
 # only make visual ( make .elf file to the .vcd file )
 visual:

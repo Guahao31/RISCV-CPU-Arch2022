@@ -13,7 +13,7 @@ module  RV32core(
 
     wire debug_clk;
 
-    debug_clk clock(.clk(clk),.debug_en(debug_en),.debug_step(debug_step),.debug_clk(debug_clk));
+    // debug_clk clock(.clk(clk),.debug_en(debug_en),.debug_step(debug_step),.debug_clk(debug_clk));
 
     wire Branch_ctrl, JALR, RegWrite_ctrl, mem_w_ctrl, MIO_ctrl,
         ALUSrc_A_ctrl, ALUSrc_B_ctrl, DatatoReg_ctrl, rs1use_ctrl, rs2use_ctrl;
@@ -152,44 +152,44 @@ module  RV32core(
     wire [31:0] Test_signal;
     assign debug_data = debug_addr[5] ? Test_signal : Debug_regs;
     
-    CPUTEST    U1_3(.PC_IF(PC_IF),
-                    .PC_ID(PC_ID),
-                    .PC_EXE(PC_EXE),
-                    .PC_MEM(PC_MEM),
-                    .PC_WB(PC_WB),
-                    .PC_next_IF(next_PC_IF),
-                    .PCJump(jump_PC_ID),
-                    .inst_IF(inst_IF),
-                    .inst_ID(inst_ID),
-                    .inst_EXE(inst_EXE),
-                    .inst_MEM(inst_MEM),
-                    .inst_WB(inst_WB),
-                    .PCEN(PC_EN_IF),
-                    .Branch(Branch_ctrl),
-                    .PCSource(Branch_ctrl),
-                    .RS1DATA(rs1_data_reg),
-                    .RS2DATA(rs2_data_reg),
-                    .Imm32(Imm_out_ID),
-                    .ImmSel(ImmSel_ctrl),
-                    .ALUC(ALUControl_ctrl),
-                    .ALUSrc_A(ALUSrc_A_ctrl),
-                    .ALUSrc_B(ALUSrc_B_ctrl),
-                    .A(ALUA_EXE),
-                    .B(ALUB_EXE),
-                    .ALU_out(ALUout_MEM),
-                    .Datai(Datain_MEM),
-                    .Datao(Dataout_MEM),
-                    .Addr(Addr),
-                    .WR(MWR),
-                    .MIO(MIO_MEM),
-                    .WDATA(wt_data_WB),
-                    .DatatoReg(DatatoReg_WB),
-                    .RegWrite(RegWrite_WB),
-                    .data_hazard(reg_FD_stall),
-                    .control_hazard(Branch_ctrl),
+    // CPUTEST    U1_3(.PC_IF(PC_IF),
+    //                 .PC_ID(PC_ID),
+    //                 .PC_EXE(PC_EXE),
+    //                 .PC_MEM(PC_MEM),
+    //                 .PC_WB(PC_WB),
+    //                 .PC_next_IF(next_PC_IF),
+    //                 .PCJump(jump_PC_ID),
+    //                 .inst_IF(inst_IF),
+    //                 .inst_ID(inst_ID),
+    //                 .inst_EXE(inst_EXE),
+    //                 .inst_MEM(inst_MEM),
+    //                 .inst_WB(inst_WB),
+    //                 .PCEN(PC_EN_IF),
+    //                 .Branch(Branch_ctrl),
+    //                 .PCSource(Branch_ctrl),
+    //                 .RS1DATA(rs1_data_reg),
+    //                 .RS2DATA(rs2_data_reg),
+    //                 .Imm32(Imm_out_ID),
+    //                 .ImmSel(ImmSel_ctrl),
+    //                 .ALUC(ALUControl_ctrl),
+    //                 .ALUSrc_A(ALUSrc_A_ctrl),
+    //                 .ALUSrc_B(ALUSrc_B_ctrl),
+    //                 .A(ALUA_EXE),
+    //                 .B(ALUB_EXE),
+    //                 .ALU_out(ALUout_MEM),
+    //                 .Datai(Datain_MEM),
+    //                 .Datao(Dataout_MEM),
+    //                 .Addr(Addr),
+    //                 .WR(MWR),
+    //                 .MIO(MIO_MEM),
+    //                 .WDATA(wt_data_WB),
+    //                 .DatatoReg(DatatoReg_WB),
+    //                 .RegWrite(RegWrite_WB),
+    //                 .data_hazard(reg_FD_stall),
+    //                 .control_hazard(Branch_ctrl),
 
-                    .Debug_addr(debug_addr[4:0]),
-                    .Test_signal(Test_signal)    
-                    );
+    //                 .Debug_addr(debug_addr[4:0]),
+    //                 .Test_signal(Test_signal)    
+    //                 );
 
 endmodule

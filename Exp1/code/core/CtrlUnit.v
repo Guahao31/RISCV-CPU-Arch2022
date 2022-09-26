@@ -107,7 +107,7 @@ module CtrlUnit(
     assign cmp_ctrl =   (1'b0 == Bop)   ? 3'b0 : 
                         (1'b1 == BEQ)   ? cmp_EQ :
                         (1'b1 == BNE)   ? cmp_NE :
-                        (1'b1 == BLT)   ? cmp_BLT :
+                        (1'b1 == BLT)   ? cmp_LT :
                         (1'b1 == BLTU)  ? cmp_LTU :
                         (1'b1 == BGE)   ? cmp_GE :
                         (1'b1 == BGEU)  ? cmp_GEU : 
