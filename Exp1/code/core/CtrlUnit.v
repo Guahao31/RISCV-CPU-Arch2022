@@ -104,13 +104,14 @@ module CtrlUnit(
     localparam cmp_LTU = 3'b100;
     localparam cmp_GE  = 3'b101;
     localparam cmp_GEU = 3'b110;
-    assign cmp_ctrl =   (1'b0 == Bop)   ? 1'b0 : 
+    assign cmp_ctrl =   (1'b0 == Bop)   ? 3'b0 : 
                         (1'b1 == BEQ)   ? cmp_EQ :
                         (1'b1 == BNE)   ? cmp_NE :
                         (1'b1 == BLT)   ? cmp_BLT :
                         (1'b1 == BLTU)  ? cmp_LTU :
                         (1'b1 == BGE)   ? cmp_GE :
-                        (1'b1 == BGEU)  ? cmp_GEU;
+                        (1'b1 == BGEU)  ? cmp_GEU : 
+                        3'b0;
 
     assign ALUSrc_A = R_valid | I_valid | B_valid | L_valid | S_valid; // 1 for data from reg as ALUSrcA
 
