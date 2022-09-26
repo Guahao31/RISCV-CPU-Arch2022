@@ -1,0 +1,18 @@
+./common/MUX2T1_32.v \
+./common/MUX4T1_32.v \
+./common/REG32.v \
+./common/add_32.v \
+./common/cmp_32.v \
+./core/ALU.v \
+./core/HazardDetectionUnit.v \
+./core/RAM_B.v \ 
+./core/REG_ID_EX.v \
+./core/REG_MEM_WB.v \
+./core/RV32core.v \
+./core/CtrlUnit.v \
+./core/ImmGen.v \
+./core/REG_EX_MEM.v \
+./core/REG_IF_ID.v \
+./core/ROM_D.v \
+./core/Regs.v \
+./sim/core_sim.v
