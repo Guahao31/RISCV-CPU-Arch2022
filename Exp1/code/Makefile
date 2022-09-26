@@ -13,8 +13,7 @@ ElfFile  = run
 FileBuf := $(shell cat $(ObjVFile))
 
 # make all
-all:
-    compile visual sim
+all: compile visual
 
 # only make compile
 compile:
@@ -23,10 +22,6 @@ compile:
 # only make visual ( make .elf file to the .vcd file )
 visual:
 	vvp -n $(ElfFile).out
-
-# only open the wave
-sim:
-	gtkwave $(VcdFile).vcd
 
 # clear middle files
 clean:

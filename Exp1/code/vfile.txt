@@ -15,4 +15,16 @@
 ./core/REG_IF_ID.v \
 ./core/ROM_D.v \
 ./core/Regs.v \
-./sim/core_sim.v
+./sim/core_sim.v \
+./auxillary/CPUTEST.v \
+./auxillary/Font816.v \
+./auxillary/btn_scan.v \ 
+./auxillary/debug_clk.v \
+./auxillary/parallel2serial.v \
+./auxillary/vga.v \
+./auxillary/Code2Inst.v \
+./auxillary/VGATEST.v \
+./auxillary/clk_diff.v \
+./auxillary/display.v \
+./auxillary/my_clk_gen.v \
+./auxillary/top.v
