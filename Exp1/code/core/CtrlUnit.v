@@ -55,28 +55,28 @@ module CtrlUnit(
     wire SRLI  = Iop & funct3_5 & funct7_0;
     wire SRAI  = Iop & funct3_5 & funct7_32;
 
-    wire BEQ = ;                            //to fill sth. in 
-    wire BNE = ;                            //to fill sth. in 
-    wire BLT = ;                            //to fill sth. in 
-    wire BGE = ;                            //to fill sth. in 
-    wire BLTU = ;                           //to fill sth. in 
-    wire BGEU = ;                           //to fill sth. in 
+    wire BEQ =  Bop & funct3_0;                            //to fill sth. in 
+    wire BNE =  Bop & funct3_1;                            //to fill sth. in 
+    wire BLT =  Bop & funct3_4;                            //to fill sth. in 
+    wire BGE =  Bop & funct3_5;                            //to fill sth. in 
+    wire BLTU = Bop & funct3_6;                           //to fill sth. in 
+    wire BGEU = Bop & funct3_7;                           //to fill sth. in 
 
-    wire LB =  ;                            //to fill sth. in 
-    wire LH =  ;                            //to fill sth. in 
-    wire LW =  ;                            //to fill sth. in 
-    wire LBU = ;                            //to fill sth. in 
-    wire LHU = ;                            //to fill sth. in 
+    wire LB =   Lop & funct3_0;                            //to fill sth. in 
+    wire LH =   Lop & funct3_1;                            //to fill sth. in 
+    wire LW =   Lop & funct3_2;                            //to fill sth. in 
+    wire LBU =  Lop & funct3_4;                            //to fill sth. in 
+    wire LHU =  Lop & funct3_5;                            //to fill sth. in 
 
-    wire SB = ;                             //to fill sth. in 
-    wire SH = ;                             //to fill sth. in 
-    wire SW = ;                             //to fill sth. in 
+    wire SB =   Sop & funct3_0;                             //to fill sth. in 
+    wire SH =   Sop & funct3_1;                             //to fill sth. in 
+    wire SW =   Sop & funct3_2;                             //to fill sth. in 
 
-    wire LUI   = ;                          //to fill sth. in 
-    wire AUIPC = ;                          //to fill sth. in 
+    wire LUI   =    (7'b0110111 == opcode);                          //to fill sth. in 
+    wire AUIPC =    (7'b0010111 == opcode);                          //to fill sth. in 
 
-    wire JAL  = ;                           //to fill sth. in 
-    assign JALR = ;                        //to fill sth. in 
+    wire JAL  =     (7'b1101111 == opcode);                           //to fill sth. in 
+    assign JALR =   (7'b1100111 == opcode);                        //to fill sth. in 
 
     wire R_valid = AND | OR | ADD | XOR | SLL | SRL | SRA | SUB | SLT | SLTU;
     wire I_valid = ANDI | ORI | ADDI | XORI | SLLI | SRLI | SRAI | SLTI | SLTIU;
@@ -85,7 +85,7 @@ module CtrlUnit(
     wire S_valid = SW | SH | SB;
 
 
-    assign Branch = ;                       //to fill sth. in 
+    assign Branch = cmp_res | JAL | JALR;                       //to fill sth. in 
 
     parameter Imm_type_I = 3'b001;
     parameter Imm_type_B = 3'b010;
@@ -98,12 +98,23 @@ module CtrlUnit(
                     {3{S_valid}}                  & Imm_type_S |
                     {3{LUI | AUIPC}}              & Imm_type_U ;
 
+    localparam cmp_EQ  = 3'b001;
+    localparam cmp_NE  = 3'b010;
+    localparam cmp_LT  = 3'b011;
+    localparam cmp_LTU = 3'b100;
+    localparam cmp_GE  = 3'b101;
+    localparam cmp_GEU = 3'b110;
+    assign cmp_ctrl =   (1'b0 == Bop)   ? 1'b0 : 
+                        (1'b1 == BEQ)   ? cmp_EQ :
+                        (1'b1 == BNE)   ? cmp_NE :
+                        (1'b1 == BLT)   ? cmp_BLT :
+                        (1'b1 == BLTU)  ? cmp_LTU :
+                        (1'b1 == BGE)   ? cmp_GE :
+                        (1'b1 == BGEU)  ? cmp_GEU;
 
-    assign cmp_ctrl = ;                         //to fill sth. in 
+    assign ALUSrc_A = R_valid | I_valid | B_valid | L_valid | S_valid; // 1 for data from reg as ALUSrcA
 
-    assign ALUSrc_A = ;                         //to fill sth. in 
-
-    assign ALUSrc_B = ;                         //to fill sth. in 
+    assign ALUSrc_B = I_valid | S_valid | L_valid; // 1'b1 for imm as ALUSrcB
 
     parameter ALU_ADD  = 4'b0001;
     parameter ALU_SUB  = 4'b0010;
@@ -138,10 +149,11 @@ module CtrlUnit(
 
     assign MIO = L_valid | S_valid;
 
-    assign rs1use =  ;                        //to fill sth. in 
+    assign rs1use = ALUSrc_A ; // 1 for using of reg
 
-    assign rs2use = ;                         //to fill sth. in 
+    assign rs2use = ~ALUSrc_B; // 0 for using of reg while 1 for using of imm
 
-    assign hazard_optype = ;                  //to fill sth. in 
+    /* NOTE: assign not done */
+    assign hazard_optype = 2'b00; // Don't understand why this
 
 endmodule
