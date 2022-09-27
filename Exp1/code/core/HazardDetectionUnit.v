@@ -23,14 +23,14 @@ module HazardDetectionUnit(
     /*############### initialization  ##################*/
     initial begin
         PC_EN_IF_HDU <= 1'b0;
-        reg_FD_EN_HDU <= 1'b0;
+        reg_FD_EN_HDU <= 1'b1;
         reg_FD_stall_HDU <= 1'b0;
         reg_FD_flush_HDU <= 1'b0;
-        reg_DE_EN_HDU <= 1'b0;
+        reg_DE_EN_HDU <= 1'b1;
         reg_DE_flush_HDU <= 1'b0;
-        reg_EM_EN_HDU <= 1'b0;
+        reg_EM_EN_HDU <= 1'b1;
         reg_EM_flush_HDU <= 1'b0;
-        reg_MW_EN_HDU <= 1'b0;
+        reg_MW_EN_HDU <= 1'b1;
         forward_ctrl_ls_HDU <= 1'b0;
         forward_ctrl_A_HDU <= 2'b0;
         forward_ctrl_B_HDU <= 2'b0;
@@ -98,12 +98,14 @@ module HazardDetectionUnit(
         end
     end
 
-    /* deal with enable ang flush signals which will not change by this unit */
-    always @* reg_FD_EN_HDU = 1'b1;
-    always @* reg_DE_EN_HDU = 1'b1;
-    always @* reg_EM_EN_HDU = 1'b1;
-    always @* reg_MW_EN_HDU = 1'b1;
-    always @* reg_EM_flush_HDU = 1'b0; // never flush
+    /*
+        // deal with enable ang flush signals which will not change by this unit
+        always @* reg_FD_EN_HDU = 1'b1;
+        always @* reg_DE_EN_HDU = 1'b1;
+        always @* reg_EM_EN_HDU = 1'b1;
+        always @* reg_MW_EN_HDU = 1'b1;
+        always @* reg_EM_flush_HDU = 1'b0; // never flush
+    */
 
     /* deal with signals to judge stall */
     always @(*) begin
@@ -161,5 +163,6 @@ module HazardDetectionUnit(
     assign reg_MW_EN =      reg_MW_EN_HDU;
     assign forward_ctrl_A = forward_ctrl_A_HDU;
     assign forward_ctrl_B = forward_ctrl_B_HDU;
+    assign forward_ctrl_ls= forward_ctrl_ls_HDU;
     /*##################################################*/
 endmodule
