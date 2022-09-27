@@ -1,1 +1,3 @@
-2022-2023秋冬学期《计算机体系结构》，使用Verilog完成RISCV-CPU
+2022-2023秋冬学期《计算机体系结构》, 使用Verilog完成RISCV-CPU
+
+注意: 需要更改code/core/ 下 ROM_D.v 以及 RAM_B.v 中`$readmemh()`的参数为当前 .hex文件的绝对路径
