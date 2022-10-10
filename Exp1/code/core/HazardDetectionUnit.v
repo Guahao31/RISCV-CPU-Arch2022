@@ -22,7 +22,7 @@ module HazardDetectionUnit(
 
     /*############### initialization  ##################*/
     initial begin
-        PC_EN_IF_HDU <= 1'b0;
+        PC_EN_IF_HDU <= 1'b1;
         reg_FD_EN_HDU <= 1'b1;
         reg_FD_stall_HDU <= 1'b0;
         reg_FD_flush_HDU <= 1'b0;
@@ -98,13 +98,13 @@ module HazardDetectionUnit(
         end
     end
 
+    /* deal with enable ang flush signals which will not change by this unit */
     /*
-        // deal with enable ang flush signals which will not change by this unit
-        always @* reg_FD_EN_HDU = 1'b1;
-        always @* reg_DE_EN_HDU = 1'b1;
-        always @* reg_EM_EN_HDU = 1'b1;
-        always @* reg_MW_EN_HDU = 1'b1;
-        always @* reg_EM_flush_HDU = 1'b0; // never flush
+    always reg_FD_EN_HDU = 1'b1;
+    always reg_DE_EN_HDU = 1'b1;
+    always reg_EM_EN_HDU = 1'b1;
+    always reg_MW_EN_HDU = 1'b1;
+    always reg_EM_flush_HDU = 1'b0; // never flush
     */
 
     /* deal with signals to judge stall */
