@@ -16,3 +16,5 @@
 ./core/ROM_D.v \
 ./core/Regs.v \
 ./sim/core_sim.v \
+./auxillary/debug_clk.v \
+./auxillary/CPUTEST.v \

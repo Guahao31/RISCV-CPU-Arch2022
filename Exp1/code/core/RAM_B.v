@@ -12,7 +12,7 @@ module RAM_B(
     reg[7:0] data[0:127];
 
     initial	begin
-        $readmemh("/Users/gua/Documents/Verilog_Program/Arch/Exp1/code/core/ram.hex", data);
+        $readmemh("ram.hex", data);
     end
 
     always @ (negedge clka) begin
