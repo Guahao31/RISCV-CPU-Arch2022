@@ -89,9 +89,9 @@ module HazardDetectionUnit(
         end 
     end
 
-    /* deal with load-use hazard */
+    /* deal with load-store hazard */
     always @(*) begin
-        if( mem_w_EXE && RegWrite_MEM && DatatoReg_MEM && (rd_EXE == rs2_EXE) ) begin
+        if( mem_w_EXE && RegWrite_MEM && DatatoReg_MEM && (rd_MEM == rs2_EXE) ) begin
             forward_ctrl_ls_HDU = 1'b1;
         end else begin
             forward_ctrl_ls_HDU = 1'b0;
