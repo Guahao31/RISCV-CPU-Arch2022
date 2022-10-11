@@ -32,6 +32,6 @@ module cmp_32(  input [31:0] a,
                 LTU ? res_LTU :
                 GE  ? res_GE :
                 GEU ? res_GEU :
-                1'b0);          //to fill sth. in ()
+                1'b0);
 
 endmodule
