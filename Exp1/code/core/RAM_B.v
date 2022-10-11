@@ -6,6 +6,8 @@ module RAM_B(
     input[31:0] dina,
     input wea, 
     output[31:0] douta,
+    /* mem_u_b_h_w: [0] half word; [1] word; [2] unsigned */
+    /* 00 for [0][1] when byte */
     input[2:0] mem_u_b_h_w
 );
 
