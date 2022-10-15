@@ -41,7 +41,7 @@ module HazardDetectionUnit(
 
     /* deal with Rs1 */
     always @(*) begin
-        if( (5'b0 != rs1_ID) && (5'b0 != rs1use_ID) ) begin
+        if( (5'b0 != rs1_ID) && (1'b0 != rs1use_ID) ) begin
             /* Using of reg not x0 in ID & out for ID */
             // EXE Hazard
             if( RegWrite_EXE && (rd_EXE == rs1_ID) ) begin
@@ -66,7 +66,7 @@ module HazardDetectionUnit(
 
     /* deal with Rs2 */
     always @(*) begin
-        if( (5'b0 != rs2_ID) && (5'b0 != rs2use_ID) ) begin
+        if( (5'b0 != rs2_ID) && (1'b0 != rs2use_ID) ) begin
             /* Using of reg not x0 in ID & out for ID */
             // EXE Hazard
             if( RegWrite_EXE && (rd_EXE == rs2_ID) ) begin
