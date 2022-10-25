@@ -14,9 +14,13 @@ module core_sim;
     );
 
     initial begin
+        $dumpfile("test.vcd");
+        $dumpvars(1, core_sim);
+        $dumpvars(1, core);
         clk = 0;
         rst = 1;
         #2 rst = 0;
+        #5000; $finish();
     end
     always #1 clk = ~clk;
 
