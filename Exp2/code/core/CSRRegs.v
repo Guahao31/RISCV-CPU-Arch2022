@@ -8,9 +8,29 @@ module CSRRegs(
     input[1:0] csr_wsc_mode,
     output[31:0] rdata,
     output[31:0] mstatus
+    /* ports added */
+    input[31:0] mepc_in,
+    input[31:0] mcause_in,
+    input[31:0] mtval_in,
+    input trap,
+    input mret,
+
+    output[31:0] mtvec_out,
+    output [31:0] mepc_out
+    /***************/
 );
     // You may need to modify this module for better efficiency
-    
+    // Define the CSR set
+    `define MSTATUS     0
+    `define MISA        1
+    `define MEDELEG     2
+    `define MIDELEG     3
+    `define MIE         4
+    `define MTVEC       5
+    `define MSCRATCH    8
+    `define MEPC        9
+    `define MCAUSE      10
+    `define MTVAL       11
     reg[31:0] CSR [0:15];
 
     // Address mapping. The address is 12 bits, but only 4 bits are used in this module.
@@ -19,24 +39,24 @@ module CSRRegs(
     wire waddr_valid = waddr[11:7] == 5'h6 && waddr[5:3] == 3'h0;
     wire[3:0] waddr_map = (waddr[6] << 3) + waddr[2:0];
 
-    assign mstatus = CSR[0];
+    assign mstatus = CSR[`MSTATUS];
 
     assign rdata = CSR[raddr_map];
 
     always@(posedge clk or posedge rst) begin
         if(rst) begin
-			CSR[0] <= 32'h88;
+			CSR[`MSTATUS] <= 32'h88;
 			CSR[1] <= 0;
 			CSR[2] <= 0;
 			CSR[3] <= 0;
-			CSR[4] <= 32'hfff;
-			CSR[5] <= 0;
+			CSR[`MIE] <= 32'hfff;
+			CSR[`MTVEC] <= 0;
 			CSR[6] <= 0;
 			CSR[7] <= 0;
-			CSR[8] <= 0;
-			CSR[9] <= 0;
-			CSR[10] <= 0;
-			CSR[11] <= 0;
+			CSR[`MSCRATCH] <= 0;
+			CSR[`MEPC] <= 0;
+			CSR[`MCAUSE] <= 0;
+			CSR[`MTVAL] <= 0;
 			CSR[12] <= 0;
 			CSR[13] <= 0;
 			CSR[14] <= 0;
@@ -48,7 +68,24 @@ module CSRRegs(
                 2'b10: CSR[waddr_map] = CSR[waddr_map] | wdata;
                 2'b11: CSR[waddr_map] = CSR[waddr_map] & ~wdata;
                 default: CSR[waddr_map] = wdata;
-            endcase            
+            endcase          
+        end
+        else if(mret) begin
+            CSR[`MEPC]      <= mepc_in;
+            CSR[`MCAUSE]    <= mcause_in;
+            CSR[`MTVAL]     <= mtval_in;
+            CSR[`MSTATUS][3]<= CSR[`MSTATUS][7]; // MPIE -> MIE
+        end
+        else if(trap) begin
+            CSR[`MEPC]      <= mepc_in;
+            CSR[`MCAUSE]    <= mcause_in;
+            CSR[`MTVAL]     <= mtval_in;
+            CSR[`MSTATUS][7]<= CSR[`MSTATUS][3];
+            CSR[`MSTATUS][3]<= 1'b0; // Disable interupt
+            CSR[`MSTATUS][12:11]<=2'b11;
         end
     end
+    assign mtvec_out    = CSR[`MTVEC];
+    assign mepc_out     = CSR[`MEPC];
+
 endmodule
