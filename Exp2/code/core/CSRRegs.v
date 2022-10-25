@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-
+`include "my_macros.vh"
 module CSRRegs(
     input clk, rst,
     input[11:0] raddr, waddr,
@@ -21,16 +21,6 @@ module CSRRegs(
 );
     // You may need to modify this module for better efficiency
     // Define the CSR set
-    `define MSTATUS     0
-    `define MISA        1
-    `define MEDELEG     2
-    `define MIDELEG     3
-    `define MIE         4
-    `define MTVEC       5
-    `define MSCRATCH    8
-    `define MEPC        9
-    `define MCAUSE      10
-    `define MTVAL       11
     reg[31:0] CSR [0:15];
 
     // Address mapping. The address is 12 bits, but only 4 bits are used in this module.
