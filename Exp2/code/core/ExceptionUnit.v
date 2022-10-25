@@ -52,7 +52,8 @@ module ExceptionUnit(
     CSRRegs csr(.clk(clk),.rst(rst),.csr_w(csr_w),.raddr(csr_raddr),.waddr(csr_waddr),
         .wdata(csr_wdata),.rdata(csr_rdata),.mstatus(mstatus),.csr_wsc_mode(csr_wsc),
         .mepc_in(mepc), .mcause_in(mcause), .mtval_in(mtval), 
-        .trap(mstatus[3] & trap_maybe), .mret(mret));
+        .trap(mstatus[3] & trap_maybe), .mret(mret),
+        .mtvec_out(mtvec_out), .mepc_out(mepc_out));
 
     /* deal with csr r/w */
     always @(*) begin
@@ -79,7 +80,7 @@ module ExceptionUnit(
                 mcause  <= `M_EXT_INT;
                 mtval   <= 0;
             end else if(illegal_inst) begin
-                mepc    <= eppc_cur;
+                mepc    <= epc_cur;
                 mcause  <= `INST_ILLEGAL;
                 mtval   <= 0;
             end else if(l_access_fault) begin
@@ -87,7 +88,7 @@ module ExceptionUnit(
                 mcause  <= `LOAD_ADDR_FAULT;
                 mtval   <= 0;
             end else if(s_access_fault) begin
-                mepc    <= ecp_cur;
+                mepc    <= epc_cur;
                 mcause  <= `STORE_ADDR_FAULT;
                 mtval   <= 0;
             end else if(ecall_m) begin
@@ -110,7 +111,7 @@ module ExceptionUnit(
     reg reg_FD_flush_EU, reg_DE_flush_EU, reg_EM_flush_EU, reg_MW_flush_EU;
     reg RegWrite_cancel_EU;
     /* deal with control signals when trap */
-    alway @(*) begin
+    always @(*) begin
         if(mstatus[3] & trap_maybe) begin
             reg_FD_flush_EU     <= 1'b1;
             reg_DE_flush_EU     <= 1'b1;
@@ -127,7 +128,7 @@ module ExceptionUnit(
     end
 
     assign csr_r_data_out   = csr_rdata;
-    assign PC_redirect      = mret ? mepc_o : mtvec;
+    assign PC_redirect      = mret ? mepc_out : mtvec_out;
     assign redirect_mux     = mret | (mstatus[3] & trap_maybe);
     assign reg_FD_flush     = reg_FD_flush_EU;
     assign reg_DE_flush     = reg_DE_flush_EU;

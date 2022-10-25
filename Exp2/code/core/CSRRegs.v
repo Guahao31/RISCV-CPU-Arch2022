@@ -7,7 +7,7 @@ module CSRRegs(
     input csr_w,
     input[1:0] csr_wsc_mode,
     output[31:0] rdata,
-    output[31:0] mstatus
+    output[31:0] mstatus,
     /* ports added */
     input[31:0] mepc_in,
     input[31:0] mcause_in,
@@ -16,7 +16,7 @@ module CSRRegs(
     input mret,
 
     output[31:0] mtvec_out,
-    output [31:0] mepc_out
+    output[31:0] mepc_out
     /***************/
 );
     // You may need to modify this module for better efficiency
