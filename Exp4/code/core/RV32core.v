@@ -11,7 +11,11 @@ module  RV32core(
         input clk,  // main clock
         input rst,  // synchronous reset
         input interrupter,  // interrupt source, for future use
-        input vga_sw
+        input vga_sw,
+
+        /* ports added here */
+        output debug_stall,
+        output [2:0] debug_state
 	);
 
 	wire debug_clk;
@@ -151,6 +155,10 @@ module  RV32core(
         .data_w(Dataout_MEM),.data_r(Datain_MEM),.stall(cmu_stall),
         .mem_cs_o(ram_cs),.mem_we_o(ram_we),.mem_addr_o(ram_addr),
         .mem_data_i(ram_dout),.mem_data_o(ram_din),.mem_ack_i(ram_ack),.cmu_state(cmu_state));
+    
+    /* debug signals here */
+    assign debug_stall = cmu_stall;
+    assign debug_state = cmu_state;
 
     data_ram RAM(.clk(debug_clk),.rst(rst),.addr(ram_addr),
 		.cs(ram_cs),.we(ram_we),.din(ram_din),.dout(ram_dout),

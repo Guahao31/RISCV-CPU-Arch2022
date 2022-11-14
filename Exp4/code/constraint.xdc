@@ -116,3 +116,13 @@ set_property SLEW FAST [get_ports HS]
 set_property PACKAGE_PIN M21 [get_ports VS]
 set_property IOSTANDARD LVCMOS33 [get_ports VS]
 set_property SLEW FAST [get_ports VS]
+
+# Added for Pmod(out)
+set_property PACKAGE_PIN C16 [get_ports {pmod_out[0]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {pmod_out[0]}]
+set_property PACKAGE_PIN C19 [get_ports {pmod_out[1]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {pmod_out[1]}]
+set_property PACKAGE_PIN A18 [get_ports {pmod_out[2]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {pmod_out[2]}]
+set_property PACKAGE_PIN H16 [get_ports {pmod_out[3]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {pmod_out[3]}]

@@ -20,7 +20,10 @@ module top (
     output wire [3:0]VGA_B,
     output wire [3:0]VGA_G,
     output wire [3:0]VGA_R,
-    output wire HS, VS
+    output wire HS, VS,
+
+    /* ports added here */
+    output wire [3:0] pmod_out
     );
     
     // clock generator
@@ -91,6 +94,10 @@ module top (
 
     wire [31:0]mem_addr, mem_data;
     
+    /* debug signals added */
+    wire debug_stall;
+    wire [2:0] debug_state;
+
     RV32core core(
         .debug_en(SW[0]),
         .debug_step(btn_step),
@@ -101,8 +108,15 @@ module top (
         .clk(clk_cpu),
         .rst(rst_all),
         .interrupter(btn_interrupt),
-        .vga_sw(SW[13])
+        .vga_sw(SW[13]),
+
+        /* ports added */
+        .debug_stall(debug_stall),
+        .debug_state(debug_state)
         );
+
+    debug_analyzer #(.WIDTH_ANALYZER(4))
+        (.debug_info({debug_stall, debug_state}), .debug_out(pmod_out));
     
         
     VGA_TESTP  vga(.clk(clk100MHz),
